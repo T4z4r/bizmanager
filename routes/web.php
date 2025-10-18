@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::middleware(['auth', 'role:owner'])->group(function() {
+    Route::get('/shops', [ShopController::class, 'index'])->name('shops.index');
+    Route::post('/shops/store', [ShopController::class, 'store'])->name('shops.store');
+    Route::get('/shops/{id}/edit', [ShopController::class, 'edit'])->name('shops.edit');
+    Route::post('/shops/{id}/update', [ShopController::class, 'update'])->name('shops.update');
+    Route::post('/shops/{id}/delete', [ShopController::class, 'destroy'])->name('shops.delete');
+});
 require __DIR__.'/auth.php';
