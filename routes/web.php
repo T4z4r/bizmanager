@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopkeeperController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,5 +37,8 @@ Route::middleware(['auth', 'role:owner'])->group(function() {
     Route::get('/shops/{id}/edit', [ShopController::class, 'edit'])->name('shops.edit');
     Route::post('/shops/{id}/update', [ShopController::class, 'update'])->name('shops.update');
     Route::post('/shops/{id}/delete', [ShopController::class, 'destroy'])->name('shops.delete');
+
+
+    Route::resource('shopkeepers', ShopkeeperController::class)->only(['index','store','destroy']);
 });
 require __DIR__.'/auth.php';
